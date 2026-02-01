@@ -5,7 +5,6 @@ namespace Drupal\event_registration\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\event_registration\Service\MailService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -13,23 +12,19 @@ class EventRegistrationForm extends FormBase {
 
   protected Connection $database;
   protected MailService $mailService;
-  protected ConfigFactoryInterface $configFactory;
 
   public function __construct(
     Connection $database,
-    MailService $mail_service,
-    ConfigFactoryInterface $config_factory
+    MailService $mail_service
   ) {
     $this->database = $database;
     $this->mailService = $mail_service;
-    $this->configFactory = $config_factory;
   }
 
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('database'),
-      $container->get('event_registration.mail_service'),
-      $container->get('config.factory')
+      $container->get('event_registration.mail_service')
     );
   }
 
@@ -40,7 +35,7 @@ class EventRegistrationForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $current_time = time();
 
-    /* ---------------- CATEGORY ---------------- */
+    /* ================= CATEGORY ================= */
 
     $categories = $this->database->select('event_registration_event', 'e')
       ->distinct()
@@ -67,7 +62,7 @@ class EventRegistrationForm extends FormBase {
       ],
     ];
 
-    /* ---------------- EVENT DATE ---------------- */
+    /* ================= EVENT DATE ================= */
 
     $form['event_date_wrapper'] = [
       '#type' => 'container',
@@ -96,7 +91,7 @@ class EventRegistrationForm extends FormBase {
       ],
     ];
 
-    /* ---------------- EVENT NAME ---------------- */
+    /* ================= EVENT NAME ================= */
 
     $form['event_name_wrapper'] = [
       '#type' => 'container',
@@ -121,7 +116,7 @@ class EventRegistrationForm extends FormBase {
       '#required' => !empty($selected_date),
     ];
 
-    /* ---------------- USER FIELDS ---------------- */
+    /* ================= USER FIELDS ================= */
 
     $form['full_name'] = [
       '#type' => 'textfield',
@@ -155,7 +150,7 @@ class EventRegistrationForm extends FormBase {
     return $form;
   }
 
-  /* ---------------- AJAX CALLBACKS ---------------- */
+  /* ================= AJAX CALLBACKS ================= */
 
   public function updateEventDates(array &$form, FormStateInterface $form_state) {
     return $form['event_date_wrapper'];
@@ -165,7 +160,7 @@ class EventRegistrationForm extends FormBase {
     return $form['event_name_wrapper'];
   }
 
-  /* ---------------- HELPERS ---------------- */
+  /* ================= HELPERS ================= */
 
   private function getEventDatesByCategory($category) {
     return $this->database->select('event_registration_event', 'e')
@@ -193,10 +188,11 @@ class EventRegistrationForm extends FormBase {
     return $result;
   }
 
-  /* ---------------- VALIDATION ---------------- */
+  /* ================= VALIDATION ================= */
 
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $pattern = '/[^a-zA-Z\s]/';
+
     foreach (['full_name', 'college', 'department'] as $field) {
       if (preg_match($pattern, $form_state->getValue($field))) {
         $form_state->setErrorByName($field, $this->t('Special characters are not allowed.'));
@@ -204,7 +200,7 @@ class EventRegistrationForm extends FormBase {
     }
   }
 
-  /* ---------------- SUBMIT ---------------- */
+  /* ================= SUBMIT ================= */
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $event_id = $form_state->getValue('event_name');
