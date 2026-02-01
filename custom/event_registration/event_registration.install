@@ -1,0 +1,135 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+function event_registration_install() {
+  // Perform any installation tasks if needed
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function event_registration_uninstall() {
+  // Perform any uninstallation tasks if needed
+}
+
+/**
+ * Implements hook_schema().
+ */
+function event_registration_schema() {
+  $schema['event_registration_event'] = [
+    'description' => 'Stores event information.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique event ID.',
+      ],
+      'event_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Name of the event.',
+      ],
+      'category' => [
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+        'description' => 'Category of the event (Online Workshop, Hackathon, Conference, One-day Workshop).',
+      ],
+      'registration_start_date' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Unix timestamp when registration starts.',
+      ],
+      'registration_end_date' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Unix timestamp when registration ends.',
+      ],
+      'event_date' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Unix timestamp of the event date.',
+      ],
+      'status' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => 'Status of the event (1 for active, 0 for inactive).',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp when the event was created.',
+      ],
+      'changed' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp when the event was last updated.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['event_registration_entry'] = [
+    'description' => 'Stores event registration entries.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique registration ID.',
+      ],
+      'event_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Foreign Key: Reference to event_registration_event.id.',
+      ],
+      'full_name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Full name of the registrant.',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Email address of the registrant.',
+      ],
+      'college' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'College name of the registrant.',
+      ],
+      'department' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Department of the registrant.',
+      ],
+      'created' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Unix timestamp when the registration was created.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'foreign keys' => [
+      'event_registration_entry_event' => [
+        'table' => 'event_registration_event',
+        'columns' => ['event_id' => 'id'],
+      ],
+    ],
+  ];
+
+  return $schema;
+}
