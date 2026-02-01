@@ -1,0 +1,106 @@
+smtp.settings:
+  type: config_object
+  label: 'SMTP config.'
+  mapping:
+    smtp_on:
+      type: boolean
+      label: 'Turn this module on or off'
+    smtp_host:
+      type: string
+      label: 'SMTP server'
+    smtp_hostbackup:
+      type: string
+      label: 'SMTP backup server'
+    smtp_port:
+      type: string
+      label: 'SMTP port'
+    smtp_protocol:
+      type: string
+      label: 'Use encrypted protocol'
+    smtp_autotls:
+      type: boolean
+      label: 'Enable TLS encryption automatically when supported by the remote host'
+    smtp_timeout:
+      type: integer
+      label: 'Amount of seconds for the SMTP command to timeout'
+    smtp_username:
+      type: string
+      label: 'Username'
+    smtp_password:
+      type: string
+      label: 'Password'
+    smtp_from:
+      type: email
+      label: 'E-mail from address'
+    smtp_fromname:
+      type: text
+      label: 'E-mail from name'
+    smtp_client_hostname:
+      type: string
+      label: 'Hostname'
+    smtp_client_helo:
+      type: string
+      label: 'HELO'
+    smtp_allowhtml:
+      type: boolean
+      label: 'Allow to send e-mails formated as HTML'
+    smtp_reroute_address:
+      type: email
+      label: 'E-mail address to reroute all emails to'
+    smtp_debug_level:
+      type: integer
+      label: 'Debug level'
+    prev_mail_system:
+      type: string
+      label: 'Previous mail system'
+    smtp_keepalive:
+      type: boolean
+      label: 'Enable the connection keep alive function'
+    log_level:
+      type: integer
+      label: 'Log level'
+      default: 3
+
+smtp.advanced:
+  type: config_object
+  label: 'SMTP advanced settings.'
+  mapping:
+    enabled:
+      type: boolean
+      label: 'Enable SMTP advanced settings'
+    socket__bindto:
+      type: string
+      label: 'Socket bind to'
+    ssl__peer_name:
+      type: string
+      label: 'SSL peer name'
+    ssl__verify_peer:
+      type: boolean
+      label: 'SSL verify peer'
+    ssl__verify_peer_name:
+      type: boolean
+      label: 'SSL verify peer name'
+    ssl__allow_self_signed:
+      type: boolean
+      label: 'SSL allow self signed'
+    ssl__cafile:
+      type: string
+      label: 'SSL CA file'
+    ssl__capath:
+      type: string
+      label: 'SSL CA path'
+    ssl__local_cert:
+      type: string
+      label: 'SSL local certificate'
+    ssl__local_pk:
+      type: string
+      label: 'SSL local private key'
+    ssl__passphrase:
+      type: string
+      label: 'SSL passphrase'
+    ssl__verify_depth:
+      type: string
+      label: 'SSL verify depth'
+    ssl__SNI_enabled:
+      type: boolean
+      label: 'SSL SNI enabled'

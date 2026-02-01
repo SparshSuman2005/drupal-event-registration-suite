@@ -1,0 +1,13 @@
+enabled: false
+socket__bindto: ''
+ssl__peer_name: ''
+ssl__verify_peer: true
+ssl__verify_peer_name: true
+ssl__allow_self_signed: false
+ssl__cafile: ''
+ssl__capath: ''
+ssl__local_cert: ''
+ssl__local_pk: ''
+ssl__passphrase: ''
+ssl__verify_depth: ''
+ssl__SNI_enabled: false

@@ -1,0 +1,23 @@
+smtp.config:
+  path: '/admin/config/system/smtp'
+  defaults:
+    _title: 'SMTP Authentication Support'
+    _form: 'Drupal\smtp\Form\SMTPConfigForm'
+  requirements:
+    _permission: 'administer smtp module'
+
+smtp.advanced:
+  path: '/admin/config/system/smtp/advanced'
+  defaults:
+    _title: 'SMTP Advanced Settings'
+    _form: 'Drupal\smtp\Form\AdvancedForm'
+  requirements:
+    _permission: 'administer smtp module'
+
+smtp.test:
+  path: '/admin/config/system/smtp/test'
+  defaults:
+    _title: 'SMTP Authentication Support'
+    _form: 'Drupal\smtp\Form\TestForm'
+  requirements:
+    _permission: 'administer smtp module'

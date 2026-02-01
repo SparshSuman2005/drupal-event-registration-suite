@@ -1,0 +1,54 @@
+---
+label: 'Configuring Gmail with SMTP module'
+top_level: false
+related:
+  - smtp.settings_override
+---
+<h2>{% trans %}Overview{% endtrans %}</h2>
+<p>{% trans %}This guide explains how to configure the SMTP module to work with Gmail and Google Workspace (formerly G Suite) email accounts.{% endtrans %}</p>
+
+<h2>{% trans %}SSL/TLS Requirements{% endtrans %}</h2>
+<p>{% trans %}Sending mail to Gmail requires SSL or TLS encryption. Connecting to an SMTP server using SSL is possible only if PHP's openssl extension is working.{% endtrans %}</p>
+<p>{% trans %}If the SMTP module detects openssl is available, it will display the SSL/TLS options in the SMTP settings page. Alternatively, you can verify openssl support by running on the web host:{% endtrans %}</p>
+<pre><code>php -i | grep 'Stream Socket Transports'</code></pre>
+<p>{% trans %}Look for at least one of the following in the output:{% endtrans %}</p>
+<ul>
+  <li>ssl</li>
+  <li>tls</li>
+  <li>tlsv1.1</li>
+  <li>tlsv1.2</li>
+</ul>
+
+<h2>{% trans %}Gmail Account Setup Requirements{% endtrans %}</h2>
+<p>{% trans %}Several details must be adjusted on the Gmail account before it can be used with the SMTP module:{% endtrans %}</p>
+<ol>
+  <li>{% trans %}Manually log into the account through the website and accept all of the license agreements, terms of service, and any other required acknowledgments.{% endtrans %}</li>
+  <li>{% trans %}The "Less secure app access" option must be enabled on the account. Note that Google has deprecated this feature and it may not be available for all account types.{% endtrans %}</li>
+  <li>{% trans %}Multi/Two-factor authentication (2FA/TFA) must be disabled on the account.{% endtrans %}</li>
+  <li>{% trans %}An "SMTP relay service" rule may be required in order for the account to allow email to be forwarded through the system. This must be created by the domain administrator for Google Workspace accounts.{% endtrans %}</li>
+</ol>
+
+<h2>{% trans %}OAuth2 Authentication Requirements{% endtrans %}</h2>
+<p>{% trans %}Gmail currently supports using OAuth2 to authenticate senders of email, to ensure that only the valid owners can use it. OAuth2 has been required for Gmail accounts since early 2021, and new accounts have required it since mid-2020.{% endtrans %}</p>
+<p>{% trans %}This restriction means that Gmail and Google Workspace email addresses cannot be used without also enabling OAuth2, which is not currently supported by the SMTP module.{% endtrans %}</p>
+<p>{% trans %}<strong>Important:</strong> If you are using a Gmail or Google Workspace account, you will need to use OAuth2 authentication, which requires additional configuration that is not available in the current version of the SMTP module.{% endtrans %}</p>
+
+<h2>{% trans %}Recommended SMTP Settings for Gmail{% endtrans %}</h2>
+<p>{% trans %}If you are able to configure Gmail with the SMTP module, use the following settings:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}<strong>SMTP Server:</strong> smtp.gmail.com{% endtrans %}</li>
+  <li>{% trans %}<strong>SMTP Port:</strong> 587 (recommended) or 465{% endtrans %}</li>
+  <li>{% trans %}<strong>Protocol:</strong> TLS (for port 587) or SSL (for port 465){% endtrans %}</li>
+  <li>{% trans %}<strong>Username:</strong> Your full Gmail address (e.g., user@gmail.com){% endtrans %}</li>
+  <li>{% trans %}<strong>Password:</strong> Your Gmail password or App Password{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}Troubleshooting{% endtrans %}</h2>
+<p>{% trans %}If email is failing to deliver, enable the "debug" option in the SMTP settings form and send a test email. The debug output will show the responses from the server, which will provide insights into the reason for the failure.{% endtrans %}</p>
+<p>{% trans %}Common issues when using Gmail:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}Authentication failures: Verify that "Less secure app access" is enabled or that you are using an App Password{% endtrans %}</li>
+  <li>{% trans %}Connection timeouts: Check that your server's firewall allows outbound connections on ports 587 or 465{% endtrans %}</li>
+  <li>{% trans %}SSL/TLS errors: Verify that PHP's openssl extension is installed and configured correctly{% endtrans %}</li>
+  <li>{% trans %}OAuth2 required errors: The account requires OAuth2 authentication, which is not currently supported{% endtrans %}</li>
+</ul>

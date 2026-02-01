@@ -1,0 +1,17 @@
+smtp.config:
+  base_route: smtp.config
+  route_name: smtp.config
+  title: 'Settings'
+  weight: 0
+
+smtp.advanced:
+  base_route: smtp.config
+  route_name: smtp.advanced
+  title: 'Advanced'
+  weight: 10
+
+smtp.test:
+  base_route: smtp.config
+  route_name: smtp.test
+  title: 'Test'
+  weight: 20

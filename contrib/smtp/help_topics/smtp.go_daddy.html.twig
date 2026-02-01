@@ -1,0 +1,112 @@
+---
+label: 'Configuring SMTP with GoDaddy hosting'
+top_level: false
+related:
+  - smtp.settings_override
+  - smtp.gmail
+---
+<h2>{% trans %}Overview{% endtrans %}</h2>
+<p>{% trans %}This guide explains how to configure the SMTP module to work with GoDaddy hosting. GoDaddy hosting environments often have specific requirements and restrictions that can affect SMTP functionality.{% endtrans %}</p>
+
+<h2>{% trans %}Solution for GoDaddy Shared Hosting{% endtrans %}</h2>
+<p>{% trans %}<strong>If you are using GoDaddy shared hosting and experiencing SMTP connection issues, this is the most common solution that has resolved issues for many users:{% endtrans %}</strong></p>
+<p>{% trans %}For GoDaddy shared hosting, you should use the local SMTP server that GoDaddy provides. Use the following configuration:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}<strong>SMTP Server:</strong> localhost{% endtrans %}</li>
+  <li>{% trans %}<strong>SMTP Port:</strong> 25{% endtrans %}</li>
+  <li>{% trans %}<strong>Encrypted Protocol:</strong> None (do not select SSL or TLS){% endtrans %}</li>
+  <li>{% trans %}<strong>Username:</strong> Leave empty (no authentication required){% endtrans %}</li>
+  <li>{% trans %}<strong>Password:</strong> Leave empty (no authentication required){% endtrans %}</li>
+</ul>
+<p>{% trans %}<strong>Important:</strong> This configuration uses GoDaddy's local mail server, which is available on all GoDaddy shared hosting accounts. This solution has been confirmed by multiple users who experienced issues with external SMTP servers (such as Office 365, Gmail, etc.) on GoDaddy hosting.{% endtrans %}</p>
+<p>{% trans %}If you are using this localhost configuration, you may not need the SMTP module at all, as Drupal's default mail system can also use the local mail server. However, the SMTP module provides additional features and better control over email settings.{% endtrans %}</p>
+
+<h2>{% trans %}Common GoDaddy SMTP Issues{% endtrans %}</h2>
+<p>{% trans %}When deploying a Drupal site with the SMTP module to GoDaddy hosting, you may encounter issues even if the same configuration works on other hosting environments. Common problems include:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}Generic error messages without detailed information{% endtrans %}</li>
+  <li>{% trans %}Connection timeouts or failures{% endtrans %}</li>
+  <li>{% trans %}Authentication errors{% endtrans %}</li>
+  <li>{% trans %}Port blocking or firewall restrictions{% endtrans %}</li>
+  <li>{% trans %}Limited access to error logs{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}GoDaddy SMTP Server Settings{% endtrans %}</h2>
+<p>{% trans %}If you are using GoDaddy email hosting, use the following SMTP settings:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}<strong>SMTP Server:</strong> smtpout.secureserver.net (for GoDaddy email accounts){% endtrans %}</li>
+  <li>{% trans %}<strong>SMTP Port:</strong> 465 (SSL) or 587 (TLS){% endtrans %}</li>
+  <li>{% trans %}<strong>Protocol:</strong> SSL (for port 465) or TLS (for port 587){% endtrans %}</li>
+  <li>{% trans %}<strong>Username:</strong> Your full GoDaddy email address{% endtrans %}</li>
+  <li>{% trans %}<strong>Password:</strong> Your GoDaddy email account password{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}Using Third-Party SMTP Services on GoDaddy{% endtrans %}</h2>
+<p>{% trans %}<strong>Important:</strong> If you are experiencing issues with third-party SMTP services (such as Office 365, Gmail, or SendGrid) on GoDaddy shared hosting, try the localhost solution described above first. Many users have found that external SMTP connections do not work reliably on GoDaddy shared hosting due to firewall restrictions.{% endtrans %}</p>
+<p>{% trans %}If you need to use a third-party SMTP service on GoDaddy hosting, be aware of the following:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}GoDaddy shared hosting often blocks outbound connections to external SMTP servers{% endtrans %}</li>
+  <li>{% trans %}GoDaddy may block certain outbound ports, particularly port 25 for external connections{% endtrans %}</li>
+  <li>{% trans %}Ports 465 (SSL) and 587 (TLS) may be allowed, but connection attempts may still fail due to firewall rules{% endtrans %}</li>
+  <li>{% trans %}Some GoDaddy hosting plans have restrictions on external SMTP connections that cannot be overridden{% endtrans %}</li>
+  <li>{% trans %}Firewall rules may need to be adjusted by GoDaddy support, but they may not be able to make changes on shared hosting plans{% endtrans %}</li>
+  <li>{% trans %}Consider upgrading to a VPS or dedicated server if you require external SMTP connections{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}Troubleshooting Steps{% endtrans %}</h2>
+<ol>
+  <li>{% trans %}<strong>Try the Localhost Solution First:</strong> If you are on GoDaddy shared hosting and experiencing connection issues with external SMTP servers, try using the localhost configuration described above (localhost, port 25, no encryption, no authentication). This is the most common solution for GoDaddy shared hosting.{% endtrans %}</li>
+  <li>{% trans %}<strong>Check GoDaddy Software Versions:</strong> Verify that your GoDaddy hosting environment meets the requirements for the SMTP module. GoDaddy provides information about software versions at <a href="https://ca.godaddy.com/help/software-versions-shared-hosting-897" rel="nofollow">https://ca.godaddy.com/help/software-versions-shared-hosting-897</a>. Ensure that PHP and required extensions are available and properly configured.{% endtrans %}</li>
+  <li>{% trans %}<strong>Enable Debug Mode:</strong> In the SMTP settings form, enable the "Debug" option. This will provide more detailed error messages in the Drupal logs, including SMTP server responses that can help diagnose connection issues.{% endtrans %}</li>
+  <li>{% trans %}<strong>Check PHP Extensions:</strong> Verify that PHP's openssl extension is installed and enabled (if using SSL/TLS). You can check this by running:{% endtrans %}
+    <pre><code>php -i | grep 'Stream Socket Transports'</code></pre>
+    <p>{% trans %}Look for 'ssl' or 'tls' in the output. Note that for the localhost solution, openssl is not required.{% endtrans %}</p>
+  </li>
+  <li>{% trans %}<strong>Review Error Logs:</strong> Check Drupal's recent log messages at <em>Administration > Reports > Recent log messages</em>. Enable debug mode in SMTP settings for more detailed error information. The debug logs will show SMTP server responses, which can help identify the specific issue.{% endtrans %}</li>
+  <li>{% trans %}<strong>Test Port Connectivity:</strong> If using an external SMTP server, verify that your GoDaddy server can connect to the SMTP server on the required port. You may need to contact GoDaddy support to check firewall rules. Note that GoDaddy shared hosting often blocks outbound connections to external SMTP servers.{% endtrans %}</li>
+  <li>{% trans %}<strong>Try Alternative Ports:</strong> If port 587 (TLS) doesn't work, try port 465 (SSL) or vice versa. However, for GoDaddy shared hosting, the localhost solution is typically more reliable.{% endtrans %}</li>
+  <li>{% trans %}<strong>Verify Credentials:</strong> If using external SMTP, ensure that your username and password are correct. For Office 365, you may need to use an App Password instead of your regular password if two-factor authentication is enabled.{% endtrans %}</li>
+</ol>
+
+<h2>{% trans %}Accessing Error Logs{% endtrans %}</h2>
+<p>{% trans %}To access detailed error information:{% endtrans %}</p>
+<ol>
+  <li>{% trans %}Enable debug mode in the SMTP settings form{% endtrans %}</li>
+  <li>{% trans %}Navigate to <em>Administration > Reports > Recent log messages</em>{% endtrans %}</li>
+  <li>{% trans %}Filter by "SMTP" or "Mail" to see SMTP-related errors{% endtrans %}</li>
+  <li>{% trans %}Check the full error message details, which may include SMTP server responses{% endtrans %}</li>
+</ol>
+<p>{% trans %}If you need access to server-level logs (PHP error logs, Apache/Nginx logs), you may need to contact GoDaddy support or access your hosting control panel.{% endtrans %}</p>
+
+<h2>{% trans %}GoDaddy-Specific Considerations{% endtrans %}</h2>
+<ul>
+  <li>{% trans %}<strong>Port Restrictions:</strong> GoDaddy may block certain outbound ports. Port 25 is commonly blocked. Ports 465 and 587 are typically allowed, but verify with GoDaddy support if you experience connection issues.{% endtrans %}</li>
+  <li>{% trans %}<strong>Firewall Rules:</strong> GoDaddy's firewall may need to be configured to allow outbound SMTP connections. Contact GoDaddy support to verify firewall settings.{% endtrans %}</li>
+  <li>{% trans %}<strong>Shared Hosting Limitations:</strong> Some GoDaddy shared hosting plans have restrictions on external SMTP connections. Consider upgrading to a VPS or dedicated server if you need more control.{% endtrans %}</li>
+  <li>{% trans %}<strong>PHP Configuration:</strong> Verify that PHP's allow_url_fopen and related settings are properly configured. Some GoDaddy hosting plans may have restrictions on these settings.{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}Alternative Solutions{% endtrans %}</h2>
+<p>{% trans %}If you continue to experience issues with SMTP on GoDaddy hosting:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}<strong>Use the localhost solution:</strong> For GoDaddy shared hosting, the most reliable solution is to use localhost (server: localhost, port: 25, no encryption, no authentication). This uses GoDaddy's local mail server and avoids firewall restrictions.{% endtrans %}</li>
+  <li>{% trans %}Consider using GoDaddy's own email service (smtpout.secureserver.net) if you need authenticated SMTP, though the localhost solution is typically more reliable{% endtrans %}</li>
+  <li>{% trans %}If you require external SMTP services, consider upgrading to a GoDaddy VPS or dedicated server, which typically have fewer firewall restrictions{% endtrans %}</li>
+  <li>{% trans %}Use a dedicated SMTP service provider (such as SendGrid, Mailgun, or Amazon SES) that may have better compatibility with GoDaddy hosting, though these may still be blocked on shared hosting{% endtrans %}</li>
+  <li>{% trans %}Contact GoDaddy support to verify that your hosting plan allows external SMTP connections and request assistance with firewall configuration. However, be aware that shared hosting plans often have restrictions that cannot be changed.{% endtrans %}</li>
+  <li>{% trans %}Consider using Drupal's configuration override system (settings.php) to ensure settings are correctly applied{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}Using Office 365 with GoDaddy{% endtrans %}</h2>
+<p>{% trans %}<strong>Important:</strong> If you are using Office 365 with GoDaddy shared hosting and experiencing connection issues, try the localhost solution described above first. Many users have found that Office 365 SMTP connections do not work on GoDaddy shared hosting due to firewall restrictions, even though the same settings work on other hosting providers.{% endtrans %}</p>
+<p>{% trans %}If you need to use Office 365 SMTP settings on GoDaddy hosting, try these settings:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}<strong>SMTP Server:</strong> smtp.office365.com or outlook.office365.com{% endtrans %}</li>
+  <li>{% trans %}<strong>SMTP Port:</strong> 587{% endtrans %}</li>
+  <li>{% trans %}<strong>Protocol:</strong> TLS{% endtrans %}</li>
+  <li>{% trans %}<strong>Username:</strong> Your full Office 365 email address{% endtrans %}</li>
+  <li>{% trans %}<strong>Password:</strong> Your Office 365 password or App Password (if 2FA is enabled){% endtrans %}</li>
+  <li>{% trans %}<strong>From Address:</strong> Your Office 365 email address{% endtrans %}</li>
+</ul>
+<p>{% trans %}<strong>Note:</strong> If these settings work on other hosting environments (such as staging) but not on GoDaddy, the issue is likely related to GoDaddy's firewall or port restrictions. GoDaddy shared hosting often blocks outbound connections to external SMTP servers. In this case, use the localhost solution instead.{% endtrans %}</p>
+

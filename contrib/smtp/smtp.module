@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * @file
+ * Enables Drupal to send e-mail directly to an SMTP server.
+ *
+ * This module uses a customized extract of the PHPMailer
+ * library (originally by Brent R. Matzelle, now maintained
+ *  by Codeworx Tech.) relicensed from LGPL to GPL, included
+ * as a part of the module.
+ *
+ * Overriding mail handling in Drupal to make SMTP the default
+ * transport layer, requires to change the 'system.mail.interface'
+ * default value ['default' => 'Drupal\Core\Mail\PhpMail'].
+ * This module uses ['default' => 'SMTPMailSystem'].
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_modules_installed().
+ */
+function smtp_modules_installed($modules, $is_syncing = FALSE) {
+  // Disable the SMTP mailsystem if the mailsystem module is installed.
+  if (in_array('mailsystem', $modules) && !$is_syncing) {
+    // If mailsystem module is enabled, make sure SMTP is disabled.
+    \Drupal::moduleHandler()->loadInclude('smtp', 'install');
+    _disable_smtp();
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function smtp_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.smtp':
+      $output = '';
+      $output .= '<h2>' . t('About') . '</h2>';
+      $output .= '<p>' . t('The SMTP Authentication Support module allows Drupal to send email directly to an SMTP server of your choice, instead of using the default PHP mail() function. This is useful for sites that need to use authenticated SMTP for outgoing mail, or that are hosted in environments where the PHP mail() function is unreliable or unavailable.') . '</p>';
+      $output .= '<h2>' . t('Uses') . '</h2>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Configuring SMTP settings') . '</dt>';
+      $output .= '<dd>' . t('Visit the <a href=":smtp-config">SMTP configuration page</a> to configure your SMTP server settings, including hostname, port, protocol, and authentication credentials.', [':smtp-config' => Url::fromRoute('smtp.config')->toString()]) . '</dd>';
+      $output .= '<dt>' . t('Overriding configuration via settings.php') . '</dt>';
+      $output .= '<dd>' . t('You can override SMTP settings in your settings.php file for environment-specific configurations. This is especially useful for managing different settings across development, staging, and production environments, or for keeping sensitive credentials out of the database. See <a href=":settings-override-topic">Overriding SMTP configuration via settings.php</a> for detailed instructions.', [':settings-override-topic' => Url::fromRoute('help.help_topic', ['id' => 'smtp.settings_override'])->toString()]) . '</dd>';
+      $output .= '<dt>' . t('Testing email delivery') . '</dt>';
+      $output .= '<dd>' . t('Use the email test feature on the configuration page to verify that your SMTP settings are working correctly before deploying to production.') . '</dd>';
+      $output .= '</dl>';
+      return $output;
+
+    case 'smtp.config':
+      $output = '<p>' . t('All settings can be overridden in your settings.php file for environment-specific configurations. See <a href=":settings-override">Overriding SMTP configuration via settings.php</a> for details.', [':settings-override' => Url::fromRoute('help.help_topic', ['id' => 'smtp.settings_override'])->toString()]) . '</p>';
+      return $output;
+
+    case 'smtp.advanced':
+      $output = '<p>' . t('For more informatien see <a href=":settings-override">Context options and parameters</a> for details.', [':settings-override' => 'https://www.php.net/manual/en/context.php']) . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function smtp_mail($key, &$message, $params) {
+  if ($key == 'smtp-test') {
+    $message['subject'] = $params['subject'];
+    $message['body'] = $params['body'];
+  }
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ *
+ * Adds mapping for SmtpMailSystem in d7_system_mail.
+ */
+function smtp_migration_plugins_alter(array &$migrations) {
+  if (isset($migrations['d7_system_mail'])) {
+    $migrations['d7_system_mail']['process']['interface/default']['map']['SmtpMailSystem'] = 'SMTPMailSystem';
+  }
+}

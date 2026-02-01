@@ -1,0 +1,103 @@
+---
+label: 'Overriding SMTP configuration via settings.php'
+top_level: true
+---
+<h2>{% trans %}Goal{% endtrans %}</h2>
+<p>{% trans %}Override SMTP module configuration settings using your site's settings.php file for environment-specific or security-sensitive configurations.{% endtrans %}</p>
+
+<h2>{% trans %}What are configuration overrides?{% endtrans %}</h2>
+<p>{% trans %}Drupal allows you to override configuration values in your settings.php file. This is particularly useful for:{% endtrans %}</p>
+<ul>
+  <li>{% trans %}Managing different configurations across environments (development, staging, production){% endtrans %}</li>
+  <li>{% trans %}Storing sensitive credentials (passwords, API keys) outside of the database{% endtrans %}</li>
+  <li>{% trans %}Preventing configuration changes through the administrative interface{% endtrans %}</li>
+  <li>{% trans %}Ensuring consistent settings across multiple servers{% endtrans %}</li>
+</ul>
+
+<h2>{% trans %}Steps{% endtrans %}</h2>
+<ol>
+  <li>{% trans %}Open your site's <em>settings.php</em> file, typically located at <em>sites/default/settings.php</em>{% endtrans %}</li>
+  <li>{% trans %}Add configuration overrides at the end of the file, before the final closing PHP tag (if present){% endtrans %}</li>
+  <li>{% trans %}Save the file and clear the Drupal cache{% endtrans %}</li>
+</ol>
+
+<h2>{% trans %}Available SMTP configuration overrides{% endtrans %}</h2>
+<p>{% trans %}All SMTP module settings can be overridden. Here are common examples:{% endtrans %}</p>
+
+<h3>{% trans %}Basic SMTP server configuration{% endtrans %}</h3>
+<pre><code>// Enable SMTP module
+$config['smtp.settings']['smtp_on'] = TRUE;
+
+// SMTP server hostname
+$config['smtp.settings']['smtp_host'] = 'smtp.example.com';
+
+// SMTP port (common values: 25, 465, 587)
+$config['smtp.settings']['smtp_port'] = '465';
+
+// Protocol (options: 'standard', 'ssl', 'tls')
+$config['smtp.settings']['smtp_protocol'] = 'ssl';
+
+// SMTP authentication credentials
+$config['smtp.settings']['smtp_username'] = 'user@example.com';
+$config['smtp.settings']['smtp_password'] = 'your-secure-password';
+</code></pre>
+
+<h3>{% trans %}Additional SMTP settings{% endtrans %}</h3>
+<pre><code>// Backup SMTP server (optional)
+$config['smtp.settings']['smtp_hostbackup'] = 'smtp-backup.example.com';
+
+// Auto TLS (automatically enable TLS if supported)
+$config['smtp.settings']['smtp_autotls'] = TRUE;
+
+// Connection timeout in seconds
+$config['smtp.settings']['smtp_timeout'] = 30;
+
+// From address and name
+$config['smtp.settings']['smtp_from'] = 'noreply@example.com';
+$config['smtp.settings']['smtp_fromname'] = 'My Website';
+
+// Client hostname and HELO
+$config['smtp.settings']['smtp_client_hostname'] = 'example.com';
+$config['smtp.settings']['smtp_client_helo'] = 'example.com';
+
+// Allow HTML formatted emails
+$config['smtp.settings']['smtp_allowhtml'] = FALSE;
+
+// Reroute all emails to a specific address (useful for testing)
+$config['smtp.settings']['smtp_reroute_address'] = 'test@example.com';
+
+// Log level (use RfcLogLevel::DEBUG constant for debugging)
+// Options: RfcLogLevel::EMERGENCY, ALERT, CRITICAL, ERROR, WARNING, NOTICE, INFO, DEBUG
+$config['smtp.settings']['log_level'] = 3; // ERROR
+// Debug level (only applies when log_level is DEBUG)
+$config['smtp.settings']['smtp_debug_level'] = 1;
+
+// Keep connection alive
+$config['smtp.settings']['smtp_keepalive'] = FALSE;
+</code></pre>
+
+<h3>{% trans %}Setting SMTP as the default mail system{% endtrans %}</h3>
+<pre><code>// Set SMTP as the default mail handler
+$config['system.mail']['interface']['default'] = 'SMTPMailSystem';
+</code></pre>
+
+<h2>{% trans %}Important notes{% endtrans %}</h2>
+<ul>
+  <li>{% trans %}Configuration overrides in settings.php take precedence over values stored in the database{% endtrans %}</li>
+  <li>{% trans %}Settings overridden via settings.php cannot be changed through the administrative interface - the form fields will appear disabled{% endtrans %}</li>
+  <li>{% trans %}Always use version control for your settings.php file, but exclude sensitive credentials using environment variables or a separate settings.local.php file{% endtrans %}</li>
+  <li>{% trans %}After making changes to settings.php, clear the Drupal cache for the changes to take effect{% endtrans %}</li>
+  <li>{% trans %}For sensitive values like passwords, consider using environment variables:{% endtrans %}
+    <pre><code>$config['smtp.settings']['smtp_password'] = getenv('SMTP_PASSWORD');</code></pre>
+  </li>
+</ul>
+
+<h2>{% trans %}Security best practices{% endtrans %}</h2>
+<ul>
+  <li>{% trans %}Never commit sensitive credentials to version control{% endtrans %}</li>
+  <li>{% trans %}Use environment variables for passwords and API keys{% endtrans %}</li>
+  <li>{% trans %}Restrict file permissions on settings.php (typically 444 or 400){% endtrans %}</li>
+  <li>{% trans %}Use different credentials for each environment (development, staging, production){% endtrans %}</li>
+  <li>{% trans %}Consider using a settings.local.php file for environment-specific settings that should not be committed{% endtrans %}</li>
+</ul>
+
