@@ -141,9 +141,9 @@ class EventConfigForm extends FormBase {
       $event_timestamp = $event_date->getTimestamp();
       $end_timestamp = $registration_end->getTimestamp();
 
-      if ($event_timestamp < $end_timestamp) {
+      if ($event_timestamp <= $end_timestamp) {
         $form_state->setErrorByName('event_date',
-          $this->t('Event date should be after or equal to registration end date.'));
+          $this->t('Event date should be after registration end date.'));
       }
     }
   }
