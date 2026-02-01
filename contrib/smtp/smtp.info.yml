@@ -1,0 +1,11 @@
+name: SMTP Authentication Support
+description: "Allow for site emails to be sent through an SMTP server of your choice."
+package: Mail
+type: module
+core_version_requirement: ^9.5 || ^10 || ^11
+configure: smtp.config
+
+# Information added by Drupal.org packaging script on 2026-01-09
+version: '8.x-1.4+26-dev'
+project: 'smtp'
+datestamp: 1767918727
