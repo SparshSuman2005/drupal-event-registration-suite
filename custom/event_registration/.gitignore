@@ -1,0 +1,78 @@
+# .gitignore for Event Registration Module
+
+## Drupal-specific ignores
+*.css.map
+*.js.map
+*.txt~
+*~
+
+## Composer
+/vendor/
+composer.phar
+composer.lock  # Although included in repo, ignoring local variations
+
+## IDE and Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+.settings/
+.project
+*.tmproj/
+
+## OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+## Logs
+logs/
+*.log
+sites/*/*/logs/
+sites/*/private/logs/
+tmp/
+temp/
+
+## Drupal files and directories
+/files/
+/sites/default/files/
+/private/
+config/
+sites/default/settings.local.php
+sites/default/settings.php.bak
+sites/default/settings.php~
+
+## Testing
+.phpunit.result.cache
+.php_cs.cache
+.php_cs.dist.cache
+
+## Environment specific
+.env
+.env.local
+.env.*
+!.env.example
+
+## Backup files
+*.bak
+*.backup
+*.orig
+*.save
+
+## Ignore the SQL dump file if it's temporary
+*.sql
+!event_registration.sql  # Explicitly keep the module's SQL file
+
+## Skip module-specific cache and temp files
+cache/
+tmp/
+temp/
+
+## Ignore any local development specific files
+local.settings.php
+settings.local.php

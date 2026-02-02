@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Drupal Version](https://img.shields.io/badge/Drupal-10.x-green.svg)](https://www.drupal.org/)
+[![Drupal Version](https://img.shields.io/badge/Drupal-10.x-important.svg)](https://www.drupal.org/)
 [![PHP Version](https://img.shields.io/badge/PHP->=8.1-blue.svg)](https://www.php.net/)
 [![License](https://img.shields.io/badge/License-GPL--2.0-orange.svg)](LICENSE.txt)
 [![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)](STATUS)
