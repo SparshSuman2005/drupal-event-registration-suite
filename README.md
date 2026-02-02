@@ -326,10 +326,8 @@ Maintains registration records with foreign key relationships:
 - Best practices documentation
 
 ### Contact Information
-- GitHub repository for issue tracking
-- Community forums for general questions
-- Professional support options available
-- Contribution guidelines for developers
+- GitHub repository for issue trackings
+- for any query and doubt contact maintainer 'sparsh.storage1@gmail.com'
 
 ## License Information
 
