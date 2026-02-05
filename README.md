@@ -20,7 +20,8 @@
 
 <p>
     <a href="https://www.drupal.org/" target="_blank"><strong>Drupal Website</strong></a> •
-    <a href="#features"><strong>Module Features</strong></a>
+    <a href="#features"><strong>Module Features</strong></a> •
+    <a href="#file-structure"><strong>File Structure</strong></a>
 </p>
 
 </div>
@@ -38,6 +39,35 @@ This project was developed to create a **comprehensive event registration system
 -   **User Experience Focus**: Intuitive interfaces for both users and administrators.
 
 All features strictly follow Drupal development standards and security practices.
+
+---
+
+## File Structure
+
+The event_registration module follows Drupal's standard module structure:
+
+```
+event_registration/
+├── config/
+├── sql/
+├── src/
+│   ├── Controller/
+│   │   └── CsvExportController.php
+│   ├── Form/
+│   │   ├── AdminSettingsForm.php
+│   │   ├── EventConfigForm.php
+│   │   ├── EventRegistrationForm.php
+│   │   └── RegistrationListForm.php
+│   └── Service/
+│       └── MailService.php
+├── event_registration.info.yml
+├── event_registration.install
+├── event_registration.links.menu.yml
+├── event_registration.module
+├── event_registration.permissions.yml
+├── event_registration.routing.yml
+└── event_registration.services.yml
+```
 
 ---
 
