@@ -482,17 +482,9 @@ Full transparency on what this system is *not* designed to do:
 
 ---
 
-## License Information
+## License
 
-This module is licensed under the GNU General Public License v2.0 (GPL-2.0) or later, which is the standard license for Drupal modules.
-
-### GPL-2.0 License Terms:
-- **Freedom to Use**: You can run the program for any purpose
-- **Freedom to Study**: You can study how the program works and change it
-- **Freedom to Redistribute**: You can redistribute copies of the original program
-- **Freedom to Distribute**: You can distribute copies of your modified versions
-
-This ensures that the module remains open source and freely available for the Drupal community while protecting the rights of contributors.
+This module is licensed under the [GNU General Public License v2.0 or later](LICENSE.md).
 
 ---
 
