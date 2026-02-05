@@ -477,10 +477,8 @@ Full transparency on what this system is *not* designed to do:
 - Best practices documentation
 
 ### Contact Information
-- GitHub repository for issue tracking
-- Community forums for general questions
-- Professional support options available
-- Contribution guidelines for developers
+- GitHub repository for issue trackings
+- for any query and doubt contact maintainer 'sparsh.storage1@gmail.com'
 
 ---
 
