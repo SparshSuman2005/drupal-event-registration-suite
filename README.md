@@ -1,30 +1,45 @@
-# Comprehensive Event Registration Module for Drupal 10
-
 <div align="center">
 
-[![Drupal Version](https://img.shields.io/badge/Drupal-10.x-important.svg)](https://www.drupal.org/)
-[![PHP Version](https://img.shields.io/badge/PHP->=8.1-blue.svg)](https://www.php.net/)
-[![License](https://img.shields.io/badge/License-GPL--2.0-orange.svg)](LICENSE.txt)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen.svg)](STATUS)
+<h1>Comprehensive Event Registration Module for Drupal 10</h1>
 
-**A sophisticated, enterprise-grade custom Drupal 10 module that enables organizations to manage event registrations seamlessly.**
+<p>
+    <strong>Enterprise-Grade Event Management Solution</strong>
+</p>
 
-Built with modern Drupal best practices - Enterprise-grade security - High performance
+<p>
+    A sophisticated, enterprise-grade custom Drupal 10 module that enables organizations to manage event registrations seamlessly.
+    <br />
+    <em>Built with modern Drupal best practices - Enterprise-grade security - High performance.</em>
+</p>
+
+<p align="center">
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--2.0-orange.svg" alt="License"></a>
+    <img src="https://img.shields.io/badge/Drupal-10.x-important.svg" alt="Drupal">
+    <img src="https://img.shields.io/badge/PHP->=8.1-blue" alt="PHP">
+</p>
+
+<p>
+    <a href="https://www.drupal.org/" target="_blank"><strong>Drupal Website</strong></a> •
+    <a href="#features"><strong>Module Features</strong></a>
+</p>
 
 </div>
+<br />
 
-## Table of Contents
-- [Features](#features)
-- [System Requirements](#system-requirements)
-- [Installation Guide](#installation-guide)
-- [Configuration](#configuration)
-- [Database Schema](#database-schema)
-- [Technical Architecture](#technical-architecture)
-- [Troubleshooting](#troubleshooting)
-- [Performance Considerations](#performance-considerations)
-- [Security Features](#security-features)
-- [License Information](#license-information)
-- [Composer Configuration](#composer-configuration)
+---
+
+## Project Objective
+
+This project was developed to create a **comprehensive event registration system** for Drupal 10 that demonstrates:
+
+-   **Modern Drupal Development**: Following Drupal 10 best practices and standards.
+-   **Enterprise-Grade Security**: Robust validation and access controls.
+-   **Scalable Architecture**: Designed for high-performance applications.
+-   **User Experience Focus**: Intuitive interfaces for both users and administrators.
+
+All features strictly follow Drupal development standards and security practices.
+
+---
 
 ## Features
 
@@ -43,6 +58,8 @@ Built with modern Drupal best practices - Enterprise-grade security - High perfo
 - **Configurable Email Settings**: Flexible admin notification controls
 - **Custom Permission System**: Role-based access control for administrative functions
 - **Foreign Key Integrity**: Proper relational database design with referential integrity
+
+---
 
 ## System Requirements
 
@@ -64,6 +81,8 @@ Built with modern Drupal best practices - Enterprise-grade security - High perfo
 - `curl` (for HTTP requests)
 - `zip` (for archive operations)
 - `mbstring` (for multibyte string handling)
+
+---
 
 ## Installation Guide
 
@@ -109,6 +128,8 @@ composer require custom/event_registration
 drush en event_registration
 ```
 
+---
+
 ## Configuration
 
 ### Initial Setup
@@ -140,6 +161,8 @@ drush en event_registration
    - Event Date (updates based on category, triggers AJAX)
    - Event Name (updates based on date, triggers AJAX)
 4. Submit the form for registration
+
+---
 
 ## Database Schema
 
@@ -176,6 +199,8 @@ Maintains registration records with foreign key relationships:
 - Cascade delete protection prevents orphaned registration records
 - Indexes on frequently queried columns for optimal performance
 
+---
+
 ## Technical Architecture
 
 ### Development Standards Compliance
@@ -203,6 +228,122 @@ Maintains registration records with foreign key relationships:
 - **Comprehensive Logging**: Detailed error logs for troubleshooting
 - **User-Friendly Messages**: Clear, actionable error messages for users
 - **Validation Feedback**: Immediate feedback on form validation failures
+
+---
+
+## Architecture & Process Flow
+
+This module utilizes a **Modular, Service-Oriented** architecture to ensure clean separation of concerns and maintainability. The flow is designed for optimal performance and security.
+
+```mermaid
+graph TD
+    User([User])
+    User -->|Browser| DRUPAL[Drupal Event Registration]
+
+    DRUPAL -->|Form Submission| FORM[Event Registration Form]
+    FORM -->|Validation| VALIDATOR[Form Validator]
+    VALIDATOR -->|Database Insert| DATABASE[(Database: Events & Entries)]
+
+    DATABASE -->|Success| EMAIL_SERVICE[Email Service]
+    EMAIL_SERVICE -->|Notifications| USER_EMAIL[User Confirmation]
+    EMAIL_SERVICE -->|Notifications| ADMIN_EMAIL[Admin Notification]
+
+    subgraph "Drupal Core"
+    FORM
+    VALIDATOR
+    DATABASE
+    end
+
+    subgraph "Event Registration Module"
+    EMAIL_SERVICE
+    USER_EMAIL
+    ADMIN_EMAIL
+    end
+```
+
+### Registration Pipeline
+1.  **Request**: User accesses registration form at `/event-registration`.
+2.  **Validate**: Form validates all inputs including special characters and required fields.
+3.  **Process**: Server-side validation checks registration window and availability.
+4.  **Store**: Valid registration is stored in the database with timestamp.
+5.  **Notify**: Email service sends confirmation to user and notification to admin.
+
+---
+
+## Local Setup Guide
+
+Follow this guide to set up and run the event registration module on your local Drupal installation.
+
+### Prerequisites
+*   PHP 8.1+
+*   Drupal 10.0+
+*   Web Server (Apache/Nginx)
+*   Database (MySQL/PostgreSQL)
+
+### 1. Download & Prepare
+```bash
+# Navigate to your Drupal modules directory
+cd /path/to/drupal/modules/custom
+# Clone or download the event_registration module
+git clone https://github.com/your-repo/event_registration.git
+```
+
+### 2. Enable Module
+```bash
+# Navigate to your Drupal root directory
+cd /path/to/drupal
+# Enable the module using Drush
+drush en event_registration
+```
+Or enable via the Drupal admin interface at `admin/modules`.
+
+### 3. Configure Settings
+1. Navigate to `admin/config/event-registration/settings`
+2. Configure admin notification settings
+3. Save configuration
+
+### 4. Create Events
+1. Go to `admin/config/event-registration/add-event`
+2. Add your first event with required details
+3. Save the event
+
+---
+
+## Documentation Index
+
+| Document | Description |
+| :--- | :--- |
+| **[Installation Guide](#installation-guide)** | Step-by-step installation instructions. |
+| **[Configuration Guide](#configuration)** | Detailed configuration options. |
+| **[Database Schema](#database-schema)** | Complete database structure reference. |
+| **[API Documentation](#technical-architecture)** | Internal API and service documentation. |
+
+---
+
+## Performance & Limits
+
+To ensure optimal performance, the following considerations apply.
+
+| Aspect | Details | Notes |
+| :--- | :--- | :--- |
+| **Form Submissions** | Rate limited to prevent spam | Configurable in admin settings |
+| **Database Queries** | Optimized with proper indexing | Follows Drupal best practices |
+| **Email Delivery** | Queue-based for performance | Depends on server mail configuration |
+
+---
+
+## Known Limitations
+
+Full transparency on what this system is *not* designed to do:
+
+*   **Advanced Reporting**: Currently supports basic CSV export only; advanced reporting features planned for future releases.
+*   **Multi-language Support**: Module is currently in English only; translation capabilities could be added in future versions.
+*   **Payment Integration**: Does not include payment processing; designed for free events only.
+*   **Complex Event Types**: Currently supports single-date events; multi-day events require customization.
+
+> These are intentional scoping decisions aligned with the initial requirements.
+
+---
 
 ## Troubleshooting
 
@@ -261,6 +402,8 @@ Maintains registration records with foreign key relationships:
 - Check memory usage during CSV exports
 - Monitor server resource utilization
 
+---
+
 ## Performance Considerations
 
 ### Scalability Factors
@@ -274,6 +417,8 @@ Maintains registration records with foreign key relationships:
 - Implement CDN for static assets
 - Use reverse proxy caching for improved response times
 - Monitor and optimize database queries regularly
+
+---
 
 ## Security Features
 
@@ -289,6 +434,8 @@ Maintains registration records with foreign key relationships:
 - Regular security audits and updates
 - Privacy-focused data retention policies
 
+---
+
 ## Advanced Configuration
 
 ### Customization Options
@@ -302,6 +449,8 @@ Maintains registration records with foreign key relationships:
 - JSON output for AJAX requests
 - Integration hooks for third-party systems
 - Webhook support for external notifications
+
+---
 
 ## Maintenance and Updates
 
@@ -317,6 +466,8 @@ Maintains registration records with foreign key relationships:
 - File system backups of custom code
 - Version control with Git for code management
 
+---
+
 ## Support and Community
 
 ### Documentation Resources
@@ -331,6 +482,8 @@ Maintains registration records with foreign key relationships:
 - Professional support options available
 - Contribution guidelines for developers
 
+---
+
 ## License Information
 
 This module is licensed under the GNU General Public License v2.0 (GPL-2.0) or later, which is the standard license for Drupal modules.
@@ -342,6 +495,8 @@ This module is licensed under the GNU General Public License v2.0 (GPL-2.0) or l
 - **Freedom to Distribute**: You can distribute copies of your modified versions
 
 This ensures that the module remains open source and freely available for the Drupal community while protecting the rights of contributors.
+
+---
 
 ## Composer Configuration
 
